@@ -117,7 +117,7 @@ public class Main extends Application {
 	}
 	
 	@Override
-	public void start(Stage primaryStage) {	
+	public void start(Stage primaryStage) throws Exception {	
 		try {
 			// Fetch Random Movie
 			do {				
@@ -136,8 +136,8 @@ public class Main extends Application {
 			movieDetail = getRandomMovie(id, true);
 			
 			type = movieDetail.getString("@type");
-			synopsis = movieDetail.getString("description");
-			contentRating = movieDetail.getString("contentRating");
+			synopsis = movieDetail.getString("description") != null ? movieDetail.get("description").toString() : "Description Not Available";
+			contentRating = movieDetail.getString("contentRating") != null ? movieDetail.get("contentRating").toString() : "Content Rating Not Available";
 			
 			// Buat Object
 			Movie theMovie = new Movie(id, movieTitle, releaseYear, mainActors, posterUrl, type, synopsis, contentRating);
