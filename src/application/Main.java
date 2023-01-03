@@ -122,7 +122,7 @@ public class Main extends Application {
 			// Fetch Random Movie
 			do {				
 				String randomWord = RandomStringUtils.randomAlphabetic(3);
-				movie = getRandomMovie("Find Me", false);
+				movie = getRandomMovie(randomWord, false);
 			} while (movie == null);
 			
 			// Store movie variable from main api url
@@ -135,9 +135,23 @@ public class Main extends Application {
 			// Get Movie Details
 			movieDetail = getRandomMovie(id, true);
 			
-			type = movie.has("@type") ? movieDetail.getString("@type") : "Type Not Available";
-			synopsis = movieDetail.has("description") ? movieDetail.getString("description") : "Description Not Available";
-			contentRating = movieDetail.has("contentRating") ? movieDetail.getString("contentRating") : "Content Rating Not Available";
+			try {
+				type = movieDetail.getString("@type");
+			} catch (Exception e) {
+				type = "Type Not Available";
+			}
+			
+			try {
+				synopsis = movieDetail.getString("description");
+			} catch (Exception e) {
+				synopsis = "Description Not Available";
+			}
+			
+			try {
+				contentRating = movieDetail.getString("contentRating");
+			} catch (Exception e) {
+				contentRating = "Content Rating Not Available";
+			}
 			
 			// Buat Object
 			Movie theMovie = new Movie(id, movieTitle, releaseYear, mainActors, posterUrl, type, synopsis, contentRating);
