@@ -122,22 +122,22 @@ public class Main extends Application {
 			// Fetch Random Movie
 			do {				
 				String randomWord = RandomStringUtils.randomAlphabetic(3);
-				movie = getRandomMovie(randomWord, false);
+				movie = getRandomMovie("Find Me", false);
 			} while (movie == null);
 			
 			// Store movie variable from main api url
 			id = movie.get("#IMDB_ID").toString();
 			movieTitle = movie.get("#TITLE").toString();
-			releaseYear = movie.get("#YEAR").toString();
-			mainActors = movie.get("#ACTORS").toString();
-			posterUrl = movie.get("#IMG_POSTER") != null ? movie.get("#IMG_POSTER").toString() : "Poster Not Available";
+			releaseYear = movie.has("#YEAR") ? movie.get("#YEAR").toString() : "Year Not Available";
+			mainActors = movie.has("#ACTORS") ? movie.get("#ACTORS").toString() : "Actors Not Available";
+			posterUrl = movie.has("#IMG_POSTER") ? movie.get("#IMG_POSTER").toString() : "Poster Not Available";
 			
 			// Get Movie Details
 			movieDetail = getRandomMovie(id, true);
 			
-			type = movieDetail.getString("@type");
-			synopsis = movieDetail.getString("description") != null ? movieDetail.get("description").toString() : "Description Not Available";
-			contentRating = movieDetail.getString("contentRating") != null ? movieDetail.get("contentRating").toString() : "Content Rating Not Available";
+			type = movie.has("@type") ? movieDetail.getString("@type") : "Type Not Available";
+			synopsis = movieDetail.has("description") ? movieDetail.getString("description") : "Description Not Available";
+			contentRating = movieDetail.has("contentRating") ? movieDetail.getString("contentRating") : "Content Rating Not Available";
 			
 			// Buat Object
 			Movie theMovie = new Movie(id, movieTitle, releaseYear, mainActors, posterUrl, type, synopsis, contentRating);
