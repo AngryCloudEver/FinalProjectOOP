@@ -24,8 +24,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -38,29 +40,37 @@ public class Main extends Application {
 	// Main Stage
 	private VBox mainContainer = new VBox();
 	private VBox starter = new VBox();
+	private VBox titleScreen = new VBox();
+	private VBox resultScreen = new VBox();
 	
 	// Sub-Stage
 	private HBox frontPageTitleController = new HBox();
-	private HBox titleController = new HBox();
-	private HBox yearController = new HBox();
+	private HBox mainContentController = new HBox();
 	private HBox actorController = new HBox();
 	private HBox typeController = new HBox();
 	private HBox ratingController = new HBox();
 	private HBox synopsisController = new HBox();
-	private HBox posterController = new HBox();
-	private HBox randomerController = new HBox();
 	private HBox backerController = new HBox();
 	private HBox againController = new HBox();
 	
 	// Elements
 	private Text frontPageTitle = new Text();
+	private Text frontPageSubtitle1 = new Text();
+	private Text frontPageSubtitle2 = new Text();
+	private Text credits = new Text();
 	private Text title = new Text();
 	private Text releasedYear = new Text();
+	private Text notableActorsTitle = new Text("Notable Actors: ");
 	private Text notableActors = new Text();
+	private Text showTypeTitle = new Text("Type: ");
 	private Text showType = new Text();
+	private Text ratingTitle = new Text("Content Rating: ");
 	private Text rating = new Text();
+	private Text showSynopsisTitle = new Text("Show Synopsis: ");
 	private Text showSynopsis = new Text();
-	private ImageView poster = new ImageView();
+	private Image mainMenuImage = new Image("/assets/Main Menu Image.png");
+	private ImageView mainMenuImageView = new ImageView();
+	private ImageView resultImageView = new ImageView();
 	private Button randomer = new Button("Click Me");
 	private Button backer = new Button("Back To Main Menu");
 	private Button again = new Button("Again?");
@@ -162,29 +172,58 @@ public class Main extends Application {
 	
 	public void mainMenu(Stage primaryStage) {
 		mainCount++;
-
-		frontPageTitle.setText("The Movie Recommender");
-		frontPageTitle.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
-		// frontPageTitleController.getChildren().add(frontPageTitle);
-		frontPageTitleController.setAlignment(Pos.BASELINE_CENTER);
-		VBox.setMargin(frontPageTitleController, new Insets(20, 0, 20, 0));
 		
-		randomer.setPrefSize(100, 50);
-		randomer.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 12));
+		/* Ada frontPageTitleController -> HBox
+		 * Ada frontPageTitle -> Text
+		 * Ada randomer -> Button
+		 */
+		mainMenuImageView.setImage(mainMenuImage);
+		
+		titleScreen.setId("titleScreen");
+		
+		starter.setBackground(Background.fill(Color.web("#333185")));
+		
+		// Title
+		frontPageTitle.setText("The Movie Recommender");
+		frontPageTitle.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 36));
+		frontPageTitle.setFill(Color.web("#F4EB78"));
+		frontPageTitle.setWrappingWidth(350);
+		VBox.setMargin(frontPageTitle, new Insets(0, 0, 15, 0));
+		
+		// Subtitle
+		frontPageSubtitle1.setText("Don’t know what to watch?");
+		frontPageSubtitle1.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 15));
+		frontPageSubtitle1.setFill(Color.web("#F4EB78"));
+		frontPageSubtitle1.setWrappingWidth(350);
+		VBox.setMargin(frontPageSubtitle1, new Insets(0, 0, 10, 0));
+		
+		frontPageSubtitle2.setText("Click the button below and we will give you something fresh to watch!");
+		frontPageSubtitle2.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 15));
+		frontPageSubtitle2.setFill(Color.web("#F4EB78"));
+		frontPageSubtitle2.setWrappingWidth(350);
+		
+		// Button
+		randomer.setText("Recommend Me \nA Movie!");
+		randomer.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+		randomer.setId("recommendButton");
+		VBox.setMargin(randomer, new Insets(80, 0, 30, 0));
 		randomer.setOnAction(f -> {
 			resultScene(primaryStage);
 		});
 		
-		// randomerController.getChildren().add(randomer);
-		randomerController.setAlignment(Pos.CENTER);
-		VBox.setMargin(randomerController, new Insets(20,0,20,0));
+		// Credits
+		credits.setText("Created By:\r\n"
+				+ "Jeremy Saputra Tatuil\r\n"
+				+ "Joshua Evans Setiyawan\r\n"
+				+ "Lie Reubensto\r\n"
+				+ "Roger Julianto Angryawan");
+		credits.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.ITALIC, 15));
+		credits.setFill(Color.web("#F4EB78"));
 		
-//		starter.getChildren().addAll(
-//				frontPageTitleController,
-//				randomerController
-//		);
-		
-		if(mainCount==1) mainScene = new Scene(starter,400,300);
+		if(mainCount==1) {
+			mainScene = new Scene(starter,800,600);
+			mainScene.getStylesheets().add(this.getClass().getResource("/application/application.css").toExternalForm());
+		}
 		primaryStage.setScene(mainScene);
 		primaryStage.setTitle("The Movie Recommender");
 		primaryStage.setResizable(false);
@@ -223,10 +262,6 @@ public class Main extends Application {
 				posterUrl = "https://img.freepik.com/premium-vector/white-exclamation-mark-sign-red-circle-isolated-white-background_120819-332.jpg?w=2000";
 			}
 			
-			// releaseYear = movie.has("#YEAR") ? movie.get("#YEAR").toString() : "Year Not Available";
-			// mainActors = movie.has("#ACTORS") ? movie.get("#ACTORS").toString() : "Actors Not Available";
-			// posterUrl = movie.has("#IMG_POSTER") ? movie.get("#IMG_POSTER").toString() : "Poster Not Available";
-			
 			// Get Movie Details
 			movieDetail = getRandomMovie(id, true);
 			
@@ -238,6 +273,10 @@ public class Main extends Application {
 			
 			try {
 				synopsis = movieDetail.getString("description");
+				synopsis = synopsis.replace("&quot;", "'");
+				synopsis = synopsis.replace("&quot", "'");
+				synopsis = synopsis.replace("&apos;", "'");
+				synopsis = synopsis.replace("&apos", "'");
 			} catch (Exception e) {
 				synopsis = "Description Not Available";
 			}
@@ -251,92 +290,86 @@ public class Main extends Application {
 			// Buat Object
 			theMovie = new Movie(id, movieTitle, releaseYear, mainActors, posterUrl, type, synopsis, contentRating);
 			
-			// Title
-			title.setText(theMovie.getTitle());
-			title.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 18));
-			// titleController.getChildren().add(title);
-			titleController.setAlignment(Pos.CENTER);
-			VBox.setMargin(titleController, new Insets(20, 0, 0, 0));
+			resultScreen.setId("resultScreen");
+			mainContainer.setBackground(Background.fill(Color.web("#333185")));
 			
-			// Poster
-			poster.setImage(new Image(theMovie.getPosterUrl()));
-		    poster.setFitWidth(240);
-		    poster.setFitHeight(180);
-		    poster.setPreserveRatio(true);
-		    // posterController.getChildren().add(poster);
-		    posterController.setAlignment(Pos.BASELINE_CENTER);
-			VBox.setMargin(posterController, new Insets(20, 0, 20, 0));
+			resultImageView.setImage(new Image(theMovie.getPosterUrl()));
+			resultImageView.setFitWidth(400);
+			resultImageView.setFitHeight(600);
 			
 			// releasedYear
 			releasedYear.setText(theMovie.getReleaseYear());
-			releasedYear.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 12));
-			// yearController.getChildren().add(releasedYear);
-			yearController.setAlignment(Pos.CENTER);
-			VBox.setMargin(titleController, new Insets(20, 0, 0, 0));
+			releasedYear.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.ITALIC, 15));
+			releasedYear.setFill(Color.web("#F4EB78"));
+			
+			// Title
+			title.setText(theMovie.getTitle());
+			title.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 24));
+			title.setFill(Color.web("#F4EB78"));
+			title.setWrappingWidth(350);
+			VBox.setMargin(title, new Insets(5, 0, 25, 0));
 			
 			// Actors
+			notableActorsTitle.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+			notableActorsTitle.setFill(Color.web("#F4EB78"));
 			notableActors.setText(theMovie.getMainActors());
-			notableActors.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 12));
-			// actorController.getChildren().add(notableActors);
-			actorController.setAlignment(Pos.CENTER);
-			VBox.setMargin(actorController, new Insets(20, 0, 0, 0));
+			notableActors.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 15));
+			notableActors.setFill(Color.web("#F4EB78"));
+			notableActors.setWrappingWidth(300);
+			VBox.setMargin(notableActors, new Insets(8, 0, 20, 0));
 			
 			// Type
+			showTypeTitle.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+			showTypeTitle.setFill(Color.web("#F4EB78"));
 			showType.setText(theMovie.getType());
-			showType.setFont(Font.font("verdana",FontWeight.BOLD, FontPosture.REGULAR, 12));
-			//typeController.getChildren().add(showType);
-			typeController.setAlignment(Pos.CENTER);
-			VBox.setMargin(typeController, new Insets(20, 0, 0, 0));
+			showType.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 15));
+			showType.setFill(Color.web("#F4EB78"));
+			VBox.setMargin(showType, new Insets(8, 0, 20, 0));
 			
 			// Rating
+			ratingTitle.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+			ratingTitle.setFill(Color.web("#F4EB78"));
 			rating.setText(theMovie.getContentRating());
-			rating.setFont(Font.font("verdana",FontWeight.BOLD, FontPosture.REGULAR, 12));
-			// ratingController.getChildren().add(rating);
-			ratingController.setAlignment(Pos.CENTER);
-			VBox.setMargin(ratingController, new Insets(20, 0, 0, 0));
+			rating.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 15));
+			rating.setFill(Color.web("#F4EB78"));
+			VBox.setMargin(rating, new Insets(8, 0, 20, 0));
 			
 			// Synopsis
+			showSynopsisTitle.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+			showSynopsisTitle.setFill(Color.web("#F4EB78"));
 			showSynopsis.setText(theMovie.getSynopsis());
-			showSynopsis.setFont(Font.font("verdana",FontWeight.BOLD, FontPosture.REGULAR, 11));
-			showSynopsis.setWrappingWidth(590);
-			showSynopsis.setTextAlignment(TextAlignment.CENTER);
-			// synopsisController.getChildren().add(showSynopsis);
-			synopsisController.setAlignment(Pos.CENTER);
-			VBox.setMargin(synopsisController, new Insets(20, 0, 0, 0));
+			showSynopsis.setFont(Font.font("verdana",FontWeight.NORMAL, FontPosture.REGULAR, 15));
+			showSynopsis.setFill(Color.web("#F4EB78"));
+			showSynopsis.setWrappingWidth(300);
+			VBox.setMargin(showSynopsis, new Insets(8, 0, 20, 0));
 			
-			// Backer
-			backer.setPrefSize(200, 30);
-			backer.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 12));
-			backer.setOnAction(h -> {
-				mainMenu(primaryStage);
+			// Button
+						randomer.setText("Recommend Me \nA Movie!");
+						randomer.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+						randomer.setId("recommendButton");
+						VBox.setMargin(randomer, new Insets(80, 0, 30, 0));
+						randomer.setOnAction(f -> {
+							resultScene(primaryStage);
+						});
+						
+			// Again
+			again.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+			again.setId("againButton");
+			VBox.setMargin(again, new Insets(0, 0, 10, 0));
+			again.setOnAction(h -> {
+				resultScene(primaryStage);
 			});
 			
-			// backerController.getChildren().add(backer);
-			backerController.setAlignment(Pos.CENTER);
-			VBox.setMargin(backerController, new Insets(10, 0, 0, 0));
-			
-			// Again
-			again.setPrefSize(100, 50);
-			again.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 12));
-			again.setOnAction(g -> {
-				resultScene(primaryStage);
+			// Backer
+			backer.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 14));
+			backer.setId("backButton");
+			backer.setOnAction(h -> {
+				mainMenu(primaryStage);
 			});
 			
 			// againController.getChildren().add(again);
 			againController.setAlignment(Pos.CENTER);
 			VBox.setMargin(againController, new Insets(10, 0, 0, 0));
-			
-//			mainContainer.getChildren().addAll(
-//					posterController,
-//					titleController,
-//					yearController,
-//					actorController,
-//					typeController,
-//					synopsisController,
-//					ratingController,
-//					againController,
-//					backerController
-//			);
 			
 			if(resCount==1) resScene = new Scene(mainContainer, 800, 600);
 			resScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -352,32 +385,13 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		frontPageTitleController.getChildren().add(frontPageTitle);
-		randomerController.getChildren().add(randomer);
-		starter.getChildren().addAll(
-				frontPageTitleController,
-				randomerController
-		);
-		titleController.getChildren().add(title);
-		posterController.getChildren().add(poster);
-		yearController.getChildren().add(releasedYear);
-		actorController.getChildren().add(notableActors);
-		typeController.getChildren().add(showType);
-		ratingController.getChildren().add(rating);
-		synopsisController.getChildren().add(showSynopsis);
-		backerController.getChildren().add(backer);
-		againController.getChildren().add(again);
-		mainContainer.getChildren().addAll(
-				posterController,
-				titleController,
-				yearController,
-				actorController,
-				typeController,
-				synopsisController,
-				ratingController,
-				againController,
-				backerController
-		);
+		titleScreen.getChildren().addAll(frontPageTitle, frontPageSubtitle1, frontPageSubtitle2, randomer, credits);
+		frontPageTitleController.getChildren().addAll(mainMenuImageView, titleScreen);
+		starter.getChildren().add(frontPageTitleController);
+
+		resultScreen.getChildren().addAll(releasedYear, title, notableActorsTitle, notableActors, showTypeTitle, showType, ratingTitle, rating, showSynopsisTitle, showSynopsis, again, backer);
+		mainContentController.getChildren().addAll(resultImageView, resultScreen);
+		mainContainer.getChildren().add(mainContentController);
 		mainMenu(primaryStage);
 	}
 	
