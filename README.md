@@ -13,7 +13,7 @@ After that, just let the magic does the trick and you'll be having fun watching 
 
 So, what are you waiting for?  
 
-Download "App Name" on your device with this link:  
+Download "App Name" now!!!
 
 We've made this app with "user-friendly" as our objective.  
 
