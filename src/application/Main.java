@@ -1,7 +1,6 @@
 package application;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -18,10 +17,8 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -32,7 +29,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -42,15 +38,11 @@ public class Main extends Application {
 	private VBox starter = new VBox();
 	private VBox titleScreen = new VBox();
 	private VBox resultScreen = new VBox();
+	private Image iconImg = new Image("/assets/reel.jpg");
 	
 	// Sub-Stage
 	private HBox frontPageTitleController = new HBox();
 	private HBox mainContentController = new HBox();
-	private HBox actorController = new HBox();
-	private HBox typeController = new HBox();
-	private HBox ratingController = new HBox();
-	private HBox synopsisController = new HBox();
-	private HBox backerController = new HBox();
 	private HBox againController = new HBox();
 	
 	// Elements
@@ -149,7 +141,6 @@ public class Main extends Application {
 				json = (JSONObject) json.get("short");
 			}
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		
@@ -159,7 +150,6 @@ public class Main extends Application {
 			try {
 				listdata.add(jArray.getJSONObject(randomChoosing));
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -206,7 +196,7 @@ public class Main extends Application {
 		randomer.setText("Recommend Me \nA Movie!");
 		randomer.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
 		randomer.setId("recommendButton");
-		VBox.setMargin(randomer, new Insets(80, 0, 30, 0));
+		VBox.setMargin(randomer, new Insets(30, 0, 30, 0));
 		randomer.setOnAction(f -> {
 			resultScene(primaryStage);
 		});
@@ -226,6 +216,7 @@ public class Main extends Application {
 		}
 		primaryStage.setScene(mainScene);
 		primaryStage.setTitle("The Movie Recommender");
+		primaryStage.getIcons().add(iconImg);
 		primaryStage.setResizable(false);
 		primaryStage.show();
 	}
@@ -257,7 +248,6 @@ public class Main extends Application {
 			
 			try {
 				posterUrl = movie.get("#IMG_POSTER").toString();
-				// System.out.println(posterUrl);
 			} catch(Exception e) {
 				posterUrl = "https://img.freepik.com/premium-vector/white-exclamation-mark-sign-red-circle-isolated-white-background_120819-332.jpg?w=2000";
 			}
@@ -343,15 +333,7 @@ public class Main extends Application {
 			showSynopsis.setWrappingWidth(300);
 			VBox.setMargin(showSynopsis, new Insets(8, 0, 20, 0));
 			
-			// Button
-						randomer.setText("Recommend Me \nA Movie!");
-						randomer.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
-						randomer.setId("recommendButton");
-						VBox.setMargin(randomer, new Insets(80, 0, 30, 0));
-						randomer.setOnAction(f -> {
-							resultScene(primaryStage);
-						});
-						
+			// Button	
 			// Again
 			again.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
 			again.setId("againButton");
@@ -359,6 +341,8 @@ public class Main extends Application {
 			again.setOnAction(h -> {
 				resultScene(primaryStage);
 			});
+			againController.setAlignment(Pos.CENTER);
+			VBox.setMargin(againController, new Insets(10, 0, 0, 0));
 			
 			// Backer
 			backer.setFont(Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 14));
@@ -367,13 +351,10 @@ public class Main extends Application {
 				mainMenu(primaryStage);
 			});
 			
-			// againController.getChildren().add(again);
-			againController.setAlignment(Pos.CENTER);
-			VBox.setMargin(againController, new Insets(10, 0, 0, 0));
-			
-			if(resCount==1) resScene = new Scene(mainContainer, 800, 600);
+			if(resCount==1) resScene = new Scene(mainContainer,800,600);
 			resScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(resScene);
+			primaryStage.getIcons().add(iconImg);
 			primaryStage.setTitle("The Movie Recommender");
 			primaryStage.setResizable(false);
 			primaryStage.show();
