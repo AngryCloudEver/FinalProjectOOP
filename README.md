@@ -33,4 +33,4 @@ After you found the one you've taken interest in, you can click the "Back to Mai
 
 It's super easy!!!  
 
-Installation and User Guide link: shorturl.at/kW058 !  
+Installation and User Guide link: shorturl.at/kW058 
