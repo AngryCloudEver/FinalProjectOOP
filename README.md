@@ -13,7 +13,7 @@ After that, just let the magic does the trick and you'll be having fun watching 
 
 So, what are you waiting for?  
 
-Download "The Movie Recommender" now!!!
+Download "The Movie Recommender" now with the link: https://cutt.ly/i2Z54OK !!!
 
 We've made this app with "user-friendly" as our objective.  
 
