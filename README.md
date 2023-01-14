@@ -31,4 +31,6 @@ Just click the button "Again?" and it will give you another result.
 
 After you found the one you've taken interest in, you can click the "Back to Main Menu" button and close the app as you usually close a window.
 
-It's super easy!!!
+It's super easy!!!  
+
+Installation and User Guide: shorturl.at/kW058  
